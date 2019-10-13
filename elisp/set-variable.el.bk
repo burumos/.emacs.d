@@ -1,0 +1,6 @@
+
+(defvar low-power t
+  "マシンパーワーが低いなどの理由により機能を制限")
+
+(provide 'set-variable)
+;;; set-variable.el ends here
