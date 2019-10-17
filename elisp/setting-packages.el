@@ -35,9 +35,10 @@
       (autoload 'gfm-mode "markdown-mode"
     "Major mode for editing GitHub Flavored Markdown files" t)
       (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-      (add-hook 'markdown-mode
+      (add-hook 'markdown-mode-hook
                 '(lambda ()
                    (markdown-toggle-fontify-code-blocks-natively)
+                   (auto-fill-mode 0) ;; 自動改行機能をOFF
                    ))
       t))
 
