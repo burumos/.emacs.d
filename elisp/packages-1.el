@@ -144,6 +144,18 @@
                    (highlight-symbol-nav-mode)
                    )
 
+(my/manage-package 'origami
+                   (require 'origami)
+                   (add-hook 'prog-mode-hook
+                             (lambda () (origami-mode)))
+                   (define-key origami-mode-map (kbd "C-c C-c [") 'origami-close-all-nodes)
+                   (define-key origami-mode-map (kbd "C-c C-c ]") 'origami-open-all-nodes)
+                   (define-key origami-mode-map (kbd "C-c C-[") 'origami-close-node-recursively)
+                   (define-key origami-mode-map (kbd "C-c C-]") 'origami-open-node-recursively)
+                   (define-key origami-mode-map (kbd "C-c [") 'origami-close-node)
+                   (define-key origami-mode-map (kbd "C-c ]") 'origami-open-node)
+                   )
+
 ;;;;;;;;;;;;;; ivy/counsel
 (my/manage-package 'counsel
                    (require 'counsel)
