@@ -12,7 +12,7 @@
     ;; fuzzy ;;popup pos-tip
 
     company
-    popwin
+    ;; popwin
     ;; undo-tree
     ;;;; flymake
     flycheck
@@ -53,20 +53,17 @@
     ivy-yasnippet
 
     which-key ;; key bind一覧
-    jumplist ;; カーソル位置管理
     yasnippet
-    use-package
 
     ;; lsp
     eglot
-    ;; lsp-mode
-    ;; lsp-ui
-    ;; lsp-vue
-    ;; lsp-javascript-typescript
-    ;; lsp-php
     ))
 
 ;; my/favorite-packagesからインストールしていないパッケージをインストール
 (dolist (package my/favorite-packages)
   (unless (package-installed-p package)
-    (package-install package)))
+    (let ((result (ignore-errors (package-install package) t)))
+      (unless
+          (debug-message "%s: %s" result package)))))
+
+;; end of file

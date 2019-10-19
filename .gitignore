@@ -5,4 +5,6 @@ history
 places
 recentf
 transient
-elisp/set-variable.el
+ehist
+elpa
+elisp/local.el

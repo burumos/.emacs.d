@@ -1,6 +1,7 @@
 ;;;  $Id: $
 ;;; -*- mode:emacs-lisp; coding:utf-8 -*-
 ;;; Time-stamp: <2018-05-16 09:45:27 kawajiri>
+;;; Code:
 
 ;;; This init.el came from
 ;;; http://www.clear-code.com/blog/2012/3/20.html
@@ -8,16 +9,17 @@
 ;;; https://github.com/clear-code/emacs.d
 ;;; Special thanks to kou in Clear Code Co.
 
-;;==============================================
-;;~/.emacs.d/以下に
-;;ehist, tmp, elisp, elpa
-;;のディレクトリの作成が必要
-;;==============================================
-(provide 'first-setting)
+;; ~/.emacs.d/以下に
+;; ディレクトリを作成
+(let ((require-dirs '("ehist" "tmp" "elisp" "elpa")))
+  (dolist (d require-dirs)
+    (let ((dir (concat user-emacs-directory d)))
+      (unless (file-exists-p dir)
+            (make-directory dir)))))
 
 ;;;================= Load Path =================
-;;package.elなどでインストールしたパッケージをロードする関数
 (defun add-to-load-path (&rest paths)
+  "package.elなどでインストールしたパッケージをロードする関数"
   (let ((path
          (dolist (path paths paths)
            (let ((default-directory
@@ -25,10 +27,7 @@
              (add-to-list 'load-path default-directory)
              (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
                  (normal-top-level-add-subdirs-to-load-path))))))))
-;;(add-to-load-path sub-directory-name-of-.emacs.d ..) 
-(add-to-load-path "elisp" "elpa")
-
-(require 'edit-config)
+(add-to-load-path "elpa")
 
 ;;;================= Global Keys =================
 (define-prefix-command 'C-x2-map) ;; C-x C-x押下時のキーマップ作成
@@ -38,21 +37,16 @@
 (define-key global-map (kbd "C-c h") 'describe-key)      ; キーバインドを調べる
 (define-key global-map (kbd "C-c b") 'describe-bindings) ; キーバインドの割り当て表を表示
 (define-key global-map (kbd "C-c f") 'describe-function) ; 関数の説明
-;; (define-key global-map (kbd "C-z") 'undo)                 ; undo
 (define-key global-map (kbd "C-c i") 'indent-region)      ; インデント
 (define-key global-map (kbd "C-c C-i") 'hippie-expand)    ; 補完
-;(define-key global-map (kbd "M-C-g") 'grep)               ; grep
-;(define-key global-map (kbd "C-[ M-C-g") 'goto-line)      ; 指定行へ移動
 (define-key global-map (kbd "C-M-n") 'next-multiframe-window) ;; フレーム切り替え(次へ移動)
 (define-key global-map (kbd "C-M-p") 'previous-multiframe-window) ;;フレーム切り替え(前へ移動)
-;;(define-key global-map (kbd "C-t") 'other-window);;windowの切替
 (global-set-key (kbd "C-m") 'newline-and-indent);;newline and indent C-m
 (define-key global-map (kbd "C-c l") 'toggle-truncate-lines);;折返しを toggleで
 (define-key global-map (kbd "M-h") 'backward-kill-word) ;;前の単語を削除
 (define-key global-map (kbd "C-C C-r") 'point-to-register) ;;カーソル位置を保存
 (define-key global-map (kbd "C-C C-t") 'jump-to-register) ;;記憶したカーソル位置に戻る
 (define-key global-map (kbd "C-\\") 'hs-toggle-hiding) ;;折り畳み
-;; (define-key global-map (kbd "C-c SPC") 'cua-set-mark) ;;範囲指定スタート
 (define-key global-map (kbd "C-a") 'back-to-indentation) ;;スペースを除いた行頭に移動
 (define-key global-map (kbd "C-c C-c C-h") 'highlight-phrase) ;;ワードを指定して色をつける
 (define-key global-map (kbd "C-c C-c C-u") 'unhighlight-regexp) ;;色つけ除去
@@ -80,11 +74,12 @@
 ;;M-n 連番
 (define-key global-map (kbd "C-c C-s") 'flyspell-auto-correct-word)
 
+;; emacs lisp mode
+(define-key emacs-lisp-mode-map (kbd "C-j") 'eval-print-last-sexp)
+
 ;;;================= Coding System =================
 ;;; 日本語を使う (Localeに従う)
 (set-locale-environment nil)
-;; If locale-name is nil, its value is taken from the environment
-;; variables LC_ALL, LC_CTYPE and LANG (the st one that is set).
 
 ;;;;================= Basic Settings =================
 ;; ウィンドウを透明にする
@@ -180,10 +175,7 @@
 (require 'saveplace)
 (setq-default save-place t)
 (save-place-mode 1)
-;; Non-nil means automatically save place in each file.
-;; This means when you visit a file, point goes to the last place
-;; where it was when you previously visited the same file.
-;; This variable is automatically buffer-local.
+
 
 ;;; M-x linum-mode
 ;;; バッファの左側に行番号を表示
@@ -289,17 +281,17 @@
 (defun grep-default-command ()
   (if current-prefix-arg
       (let ((grep-command-before-target
-	     (concat grep-command-before-query
-		     (shell-quote-argument (grep-tag-default)))))
-	(cons (if buffer-file-name
-		  (concat grep-command-before-target
-			  " *."
-			  (file-name-extension buffer-file-name))
-		  (concat grep-command-before-target " ."))
-	      (+ (length grep-command-before-target) 1)))
-      (car grep-command)))
+             (concat grep-command-before-query
+                     (shell-quote-argument (grep-tag-default)))))
+        (cons (if buffer-file-name
+                  (concat grep-command-before-target
+                          " *."
+                          (file-name-extension buffer-file-name))
+                (concat grep-command-before-target " ."))
+              (+ (length grep-command-before-target) 1)))
+    (car grep-command)))
 (setq grep-command (cons (concat grep-command-before-query " .")
-			 (+ (length grep-command-before-query) 1)))
+                         (+ (length grep-command-before-query) 1)))
 
 ;;;================= Dired ================= 
 ;;; diredを便利にする
@@ -367,16 +359,16 @@
 ;; -------------------------------------------
 ;; ;; 実行の有無 (t/nil)
 (setq auto-save-default t)
- 
+
 ;;;; 格納ディレクトリーの変更
 ;;;;   (対象ファイルのパターン . 保存ファイルパス) のリスト
 (setq auto-save-file-name-transforms
       (append auto-save-file-name-transforms
-	      '((".*" "~/.emacs.d/tmp/" t))))
+              '((".*" "~/.emacs.d/tmp/" t))))
 ;; 保存の間隔
 (setq auto-save-timeout 10)     ;; 秒   (デフォルト : 30)
 (setq auto-save-interval 100)   ;; 打鍵 (デフォルト : 300)
-  
+
 ;; auto-save-list 自動保存のリスト  (~/.emacs.d/auto-save-list/.saves-xxx)
 ;; --------------------------------------------------------------------
 ;; 実行の有無 t/nil
@@ -430,25 +422,6 @@
 
 
 
-;;add package ripository "melpa"
-;; (require 'package)
-(when (require 'package nil t)
-  ;;パッケージリポジトリにMarmaladeと開発者運営のELPAの追加
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/") t)
-  (add-to-list 'package-archives
-               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-  ;; (add-to-list 'package-archives
-  ;; 	       '("marmalade" , "http://marmalade-repo.org/packages/"))
-  ;; (add-to-list 'package-archives
-  ;; 	       '("ELPA" , "http://tromey.com/com/elpa/"))
-  ;;インストールしたパッケージにロードパスを通して読み込む
-  (package-initialize))
-
-
-
-
-
 ;;設定ファイルの読み込み
 (let ((load-files
        '(
@@ -493,7 +466,7 @@
              (hs-minor-mode 1)))
 
 ;; 配色テーマ
-(load-theme 'manoj-dark t)
+(load-theme 'wombat t)
 (set-cursor-color "gold")
 
 ;; mac クリップボート共有
@@ -521,7 +494,7 @@
   '(add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
 ;; (setq-default ispell-dictionary "english")
 (setq ispell-extra-args '("--sug-mode=fast" "--run-together" "--run-together-limit=5" "--run-together-min=2"))
-(mapc                                   ;; 以下flyspell-modeの設定
+(mapc   ;; 以下flyspell-modeの設定
  (lambda (hook)
    (add-hook hook 'flyspell-prog-mode))
  ;; ここに書いたモードではコメント領域のところだけflyspell-mode有効化
@@ -539,4 +512,5 @@
      web-mode
      ))
 
-;; end file
+(provide 'first-setting)
+;;; first-setting.el ends here
