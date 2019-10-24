@@ -130,10 +130,14 @@
 (my/manage-package 'yasnippet
                    (require 'yasnippet)
                    (yas-global-mode 1)
-                   (if (package-installed-p 'ivy-yasnippet)
-                       (progn
-                         (require 'ivy-yasnippet)
-                         ))
+                   (add-hook 'prog-mode-hook #'yas-minor-mode)
+                   ;; snippetの追加は M-x yas-new-snippet
+                   ;; #binding: C-x C-q の様にキーバインドにモード別で設定できる
+                   ;; #--以降に入力されたものが挿入される
+                   (my/manage-package 'ivy-yasnippet
+                                      (require 'ivy-yasnippet)
+                                      (global-set-key (kbd "C-x C-x y") 'ivy-yasnippet)
+                                      )
                    )
 
 ;; 単語を色付け
@@ -165,8 +169,8 @@
                    (global-set-key (kbd "M-s s") 'swiper)
                    (global-set-key (kbd "M-x") 'counsel-M-x)
                    (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-                   (global-set-key (kbd "C-x C-x C-f") 'counsel-git)
-                   (global-set-key (kbd "C-x C-x C-g") 'counsel-git-grep)
+                   (global-set-key (kbd "C-x C-x f") 'counsel-git)
+                   (global-set-key (kbd "C-x C-x g") 'counsel-git-grep)
                    (global-set-key (kbd "C-x C-r") 'counsel-recentf)
                    (global-set-key (kbd "C-x C-b") 'counsel-switch-buffer)
                    (global-set-key (kbd "M-y") 'counsel-yank-pop)
@@ -184,6 +188,10 @@
                                       (require 'flyspell-correct-ivy)
                                       (define-key flyspell-mode-map (kbd "C-x C-x f") 'flyspell-correct-wrapper)
                                       (setq flyspell-correct-interface #'flyspell-correct-ivy)
+                                      )
+                   ;; tramp ivy interface
+                   (my/manage-package 'counsel-tramp
+                                      (require 'counsel-tramp)
                                       )
                    )
 
