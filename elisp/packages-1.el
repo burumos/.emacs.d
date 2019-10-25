@@ -121,6 +121,10 @@
 (my/manage-package 'eglot
                    (require 'eglot)
                    (add-hook 'js2-mode-hook 'eglot-ensure)
+                   (add-hook 'rjsx-mode-hook 'eglot-ensure)
+                   (add-hook 'typescript-mode-hook 'eglot-ensure)
+                   ;; (add-to-list 'eglot-server-programs '(typescript-mode . ("typescript-language-server" "--stdio")))
+                   ;; (add-to-list 'eglot-server-programs '(typescript-mode . ("javascript-typescript-langserver")))
                    (add-hook 'go-mode-hook 'eglot-ensure)
                    ;; https://langserver.org/
                    ;; (add-to-list 'eglot-server-programs '(foo-mode . ("foo-language-server" "--args")))

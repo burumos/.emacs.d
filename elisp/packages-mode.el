@@ -100,6 +100,11 @@
                                (setq js-switch-indent-offset my-js-mode-indent-num)
                                )))
 
+;; typescript mode
+(my/manage-package 'typescript-mode
+                   (require 'typescript-mode)
+                   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode)))
+
 ;; angular
 (my/manage-package'ng2-mode
       (require 'ng2-mode)

@@ -219,7 +219,17 @@
 (setq recentf-max-saved-items 10000) ;履歴保存数 default 20
 (setq recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list))
 ;; (setq recentf-auto-cleanup 'never) ; 存在しないファイルでも履歴を削除しない
-;(setq recentf-max-menu-items 10) ; default 10
+;; (setq recentf-max-menu-items 10) ; default 10
+
+;; recentf の メッセージをエコーエリア(ミニバッファ)に表示しない
+;; (*Messages* バッファには出力される)
+(defun recentf-save-list-inhibit-message:around (orig-func &rest args)
+  (setq inhibit-message t)
+  (apply orig-func args)
+  (setq inhibit-message nil)
+  'around)
+(advice-add 'recentf-cleanup   :around 'recentf-save-list-inhibit-message:around)
+(advice-add 'recentf-save-list :around 'recentf-save-list-inhibit-message:around)
 
 
 ;;; diff
