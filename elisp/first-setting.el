@@ -311,6 +311,8 @@
 ;;; ファイル名をそのまま変更できるのは便利
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
+(define-key dired-mode-map (kbd "M-C-n") nil)
+(define-key dired-mode-map (kbd "M-C-p") nil)
 
 ;;;================= upcase-region and downcase-region ================= 
 ;; Enabling upcase-region and downcase-region commands
