@@ -55,13 +55,26 @@
 (define-key global-map (kbd "C-x C-x C-r") 'repeat-complex-command) ;; 直前のコマンドを編集->実行
 (define-key global-map (kbd "M-d") 'my-delete-word) ;; カーソル直後の単語を削除(自作)
 (define-key global-map (kbd "M-h") 'my-backward-delete-word) ;; カーソル直前の単語を削除(自作)
-(define-key global-map (kbd "C-x C-x DEL") 'enlarge-window) ;; (DEL=>C-h) windowの縦を広げる
-(define-key global-map (kbd "C-x C-x C-w") 'enlarge-window-horizontally) ;;windowの横を広げる
-(define-key global-map (kbd "M-;") 'my-comment-dwim) ; region選択なしでもコメントアウト
+(define-key global-map (kbd "C-x C-x <down>") 'enlarge-window) ;; windowの縦を広げる
+(define-key global-map (kbd "C-x C-x <up>")
+  (lambda (n) (interactive) (enlarge-window (- n)))) ;; windowの縦を狭める
+(define-key global-map (kbd "C-x C-x <right>") 'enlarge-window-horizontally) ;; windowの横を広げる
+(define-key global-map (kbd "C-x C-x <left>")
+  (lambda (n) (interactive "p") (enlarge-window-horizontally (- n)))) ;; windowの横を狭める
+(define-key global-map (kbd "M-;") 'my-comment-dwim) ;; region選択なしでもコメントアウト
 (global-set-key (kbd "M-0") 'bs-cycle-previous) ;; バッファ移動(前)
 (global-set-key (kbd "M-9") 'bs-cycle-next) ;; バッファ移動(後)
 (global-set-key (kbd "M-[") 'my-point-history-back) ;; back point
 (global-set-key (kbd "M-]") 'my-point-history-go) ;; back back point
+(define-key global-map (kbd "C-x C-x k") 'kill-buffer)
+(define-key global-map (kbd "C-x k")  ;; 今開いてるbufferを閉じる
+  (lambda () (interactive) (kill-buffer (current-buffer))))
+
+;; redo
+(require 'redo+)
+(setq undo-no-redo t) ;; undoにredoした履歴を含まない
+(define-key global-map (kbd "C-x C-_") 'redo) ;; redo
+
 
 ;; smerge用
 (require 'smerge-mode)
@@ -311,6 +324,8 @@
 ;;; ファイル名をそのまま変更できるのは便利
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
+(define-key dired-mode-map "[" 'dired-up-directory)
+
 (define-key dired-mode-map (kbd "M-C-n") nil)
 (define-key dired-mode-map (kbd "M-C-p") nil)
 

@@ -103,7 +103,8 @@
 ;; typescript mode
 (my/manage-package 'typescript-mode
                    (require 'typescript-mode)
-                   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode)))
+                   ;; (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+                   )
 
 ;; angular
 (my/manage-package'ng2-mode

@@ -59,7 +59,7 @@
 
 
 ;; redo
-(my/manage-package 'undo-tree
+(my/manage-package nil 'undo-tree
                    (global-undo-tree-mode t)
                    ;; C-?(C-Shift-/) redo
                    ;; (global-set-key (kbd "M-z") 'undo-tree-redo)
