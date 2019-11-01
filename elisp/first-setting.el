@@ -37,6 +37,7 @@
 (define-key global-map (kbd "C-c h") 'describe-key)      ; キーバインドを調べる
 (define-key global-map (kbd "C-c b") 'describe-bindings) ; キーバインドの割り当て表を表示
 (define-key global-map (kbd "C-c f") 'describe-function) ; 関数の説明
+(define-key global-map (kbd "C-c v") 'describe-variable) ; 変数の説明
 (define-key global-map (kbd "C-c i") 'indent-region)      ; インデント
 (define-key global-map (kbd "C-c C-i") 'hippie-expand)    ; 補完
 (define-key global-map (kbd "C-M-n") 'next-multiframe-window) ;; フレーム切り替え(次へ移動)
@@ -57,18 +58,20 @@
 (define-key global-map (kbd "M-h") 'my-backward-delete-word) ;; カーソル直前の単語を削除(自作)
 (define-key global-map (kbd "C-x C-x <down>") 'enlarge-window) ;; windowの縦を広げる
 (define-key global-map (kbd "C-x C-x <up>")
-  (lambda (n) (interactive) (enlarge-window (- n)))) ;; windowの縦を狭める
+  (lambda (n) (interactive "p") (enlarge-window (- n)))) ;; windowの縦を狭める
 (define-key global-map (kbd "C-x C-x <right>") 'enlarge-window-horizontally) ;; windowの横を広げる
 (define-key global-map (kbd "C-x C-x <left>")
   (lambda (n) (interactive "p") (enlarge-window-horizontally (- n)))) ;; windowの横を狭める
 (define-key global-map (kbd "M-;") 'my-comment-dwim) ;; region選択なしでもコメントアウト
-(global-set-key (kbd "M-0") 'bs-cycle-previous) ;; バッファ移動(前)
-(global-set-key (kbd "M-9") 'bs-cycle-next) ;; バッファ移動(後)
 (global-set-key (kbd "M-[") 'my-point-history-back) ;; back point
 (global-set-key (kbd "M-]") 'my-point-history-go) ;; back back point
-(define-key global-map (kbd "C-x C-x k") 'kill-buffer)
-(define-key global-map (kbd "C-x k")  ;; 今開いてるbufferを閉じる
-  (lambda () (interactive) (kill-buffer (current-buffer))))
+(define-key global-map (kbd "C-x C-x k") 'kill-buffer) ;; bufferを選んで閉じる
+(define-key global-map (kbd "C-x k") 'kill-this-buffer) ;; 今開いてるbufferを閉じる
+
+;; window別buffer履歴
+(require 'buffer-history)
+(global-set-key (kbd "M-0") 'mybh-switch-next-buffer) ;; バッファ移動(前)
+(global-set-key (kbd "M-9") 'mybh-switch-prev-buffer) ;; バッファ移動(後)
 
 ;; redo
 (require 'redo+)

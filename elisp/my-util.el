@@ -30,6 +30,15 @@
         (or (funcall test (car lst))
             (some test (cdr lst))))))
 
+(defun filter-list (predicate lst)
+  "LSTの各要素をPREDICATEで評価して非nilとなる要素のリストを返す."
+  (if lst
+      (if (funcall predicate (car lst))
+          (cons (car lst) (filter-list predicate (cdr lst)))
+        (filter-list predicate (cdr lst)))
+    nil))
+;; (filter-list 'numberp '( 1 2 3 "4" 5 6))
+
 
 (provide 'my-util)
 ;;; my-util.el ends here
