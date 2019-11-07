@@ -8,6 +8,7 @@
 (let* ((buf-lst '())
        (last-window nil)
        (last-buffer nil)
+       (display-base-buffer nil)
        (timer nil))
 
   (defun mybh-set-list (window buffers &rest arg)
@@ -48,7 +49,8 @@
           (progn
             (mybh-set-list window
                            (append buffer-lst (list buffer)) "prev")
-            (switch-to-buffer prev-buffer))
+            (switch-to-buffer prev-buffer)
+            (message (mybh-create-switch-message window)))
         (message "Not exist previous buffer"))))
 
   (defun mybh-switch-next-buffer ()
@@ -64,9 +66,33 @@
           (progn
             (mybh-set-list window (append (list next-buffer buffer)
                                           (delete next-buffer buffer-lst)))
-            (switch-to-buffer next-buffer))
+            (switch-to-buffer next-buffer)
+            (message (mybh-create-switch-message window)))
         (message "Not exist next buffer"))
       ))
+
+  (defun mybh-create-switch-message (window)
+    "bufferをスイッチしたときにミニッファバッファに表示するメッセージ作る"
+    (let* ((buf-lst (mybh-get-list window))
+           ;; display-base-bufferを先頭にしたlist.なければ同じ.
+           (disp-buf-lst
+            (if (and (buffer-live-p display-base-buffer)
+                     (find display-base-buffer buf-lst))
+                (let ((pred (lambda (buf) (equal buf display-base-buffer))))
+                  (append (test-car-list pred buf-lst)
+                          (list-to-pass-predicate pred buf-lst)))
+              (progn
+                (setq display-base-buffer (car buf-lst))
+                buf-lst)))
+           (cur-buf (current-buffer)))
+      ;; buffer名を改行を挟めて繋げる
+      ;; 今表示しているバッファ名の先頭に'*'を付ける
+      (reduce (lambda (s1 s2) (concat s1 "\n" s2))
+              (mapcar (lambda (buf)
+                        (concat
+                         (if (equal cur-buf buf ) "*" "-")
+                         (buffer-name buf)))
+                      disp-buf-lst))))
 
   (defun mybh-start-rec-timer ()
       (setq timer
@@ -84,6 +110,8 @@
 
   (mybh-start-rec-timer)
   )
+
+
 
 (provide 'buffer-history)
 ;;; buffer-history.el ends here

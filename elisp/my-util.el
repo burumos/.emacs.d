@@ -31,7 +31,9 @@
             (some test (cdr lst))))))
 
 (defun filter-list (predicate lst)
-  "LSTの各要素をPREDICATEで評価して非nilとなる要素のリストを返す."
+  "LSTの各要素をPREDICATEで評価して非nilとなる要素のリストを返す.
+(filter-list 'numberp '( 1 2 3 \"4\" 5 6))
+=> (1 2 5 6)"
   (if lst
       (if (funcall predicate (car lst))
           (cons (car lst) (filter-list predicate (cdr lst)))
@@ -39,6 +41,14 @@
     nil))
 ;; (filter-list 'numberp '( 1 2 3 "4" 5 6))
 
+(defun list-to-pass-predicate (predicate lst)
+  "LSTを先頭から走査してPREDICATEが非nilを返したら終了して、それまでのリストを返す
+全ての要素がnilを返したらLSTを返す
+(list-to-pass-predicate (lambda (x) (= x 4)) '(1 2 3 4 5 6))
+=> (1 2 3)"
+  (and lst
+       (not (funcall predicate (car lst)))
+       (cons (car lst) (list-to-pass-predicate predicate (cdr lst)))))
 
 (provide 'my-util)
 ;;; my-util.el ends here
