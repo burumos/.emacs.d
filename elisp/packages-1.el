@@ -83,6 +83,8 @@
 ;; git client
 (my/manage-package 'magit
                    (require 'magit)
+                   (define-key magit-diff-mode-map (kbd "q")
+                     (lambda () (interactive) (magit-mode-bury-buffer t)))
                    )
 
 ;; tempolaryファイルを作る

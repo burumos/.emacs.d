@@ -271,6 +271,11 @@
     (setq write-file-hooks
           (cons 'time-stamp write-file-hooks)))
 
+(setq tramp-default-method "scp")
+
+;; 再帰回数
+(setq max-specpdl-size 10000) ;; デフォルト 1300
+(setq max-lisp-eval-depth 10000) ;; デフォルト 600
 
 ;;現時刻を表示する
 ;; (setq display-time-day-and-date t)
@@ -328,7 +333,7 @@
 (require 'wdired)
 (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 (define-key dired-mode-map "[" 'dired-up-directory)
-
+(define-key dired-mode-map "q" (lambda ()(interactive) (quit-window t)))
 (define-key dired-mode-map (kbd "M-C-n") nil)
 (define-key dired-mode-map (kbd "M-C-p") nil)
 
