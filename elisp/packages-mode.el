@@ -129,5 +129,13 @@
                    (require 'go-mode)
                    )
 
+;; yaml
+(my/manage-package 'yaml-mode
+                   (require 'yaml-mode))
+
+;; dockerfile
+(my/manage-package 'dockerfile-mode
+                   (require 'dockerfile-mode))
+
 (provide 'packages-mode)
 ;;; packages-mode.el ends here
