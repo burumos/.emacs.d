@@ -71,6 +71,22 @@
         (message "Not exist next buffer"))
       ))
 
+  (defun mybh-remove-buffer ()
+    "buffer listからcurrent bufferを消す"
+    (interactive)
+    (let* ((window (selected-window))
+           (buffer (window-buffer window))
+           (buffer-lst (filter-list (lambda (b)
+                                      (and (buffer-live-p b)
+                                           (not (equal b (current-buffer)))))
+                                    (mybh-get-list window))))
+      (if buffer-lst
+          (progn
+            (switch-to-buffer (car buffer-lst))
+            (mybh-set-list window buffer-lst))
+        (message "failed removeing becouse not exist other buffer in current window's buffer list."))
+    ))
+
   (defun mybh-create-switch-message (window)
     "bufferをスイッチしたときにミニッファバッファに表示するメッセージ作る"
     (let* ((buf-lst (mybh-get-list window))
@@ -86,12 +102,13 @@
                 buf-lst)))
            (cur-buf (current-buffer)))
       ;; buffer名を改行を挟めて繋げる
-      ;; 今表示しているバッファ名の先頭に'*'を付ける
+      ;; 今表示しているバッファ名の文字色を赤に
       (reduce (lambda (s1 s2) (concat s1 "\n" s2))
               (mapcar (lambda (buf)
-                        (concat
-                         (if (equal cur-buf buf ) "*" "-")
-                         (buffer-name buf)))
+                        (let ((buf-name (buffer-name buf)))
+                          (if (equal cur-buf buf)
+                              (propertize buf-name 'face '(:foreground "red"))
+                            buf-name)))
                       disp-buf-lst))))
 
   (defun mybh-start-rec-timer ()

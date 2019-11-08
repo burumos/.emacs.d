@@ -72,11 +72,12 @@
 (require 'buffer-history)
 (global-set-key (kbd "M-0") 'mybh-switch-next-buffer) ;; バッファ移動(前)
 (global-set-key (kbd "M-9") 'mybh-switch-prev-buffer) ;; バッファ移動(後)
+(global-set-key (kbd "C-x C-x 0") 'mybh-remove-buffer) ;; バッファリストから削除
 
 ;; redo
 (require 'redo+)
 (setq undo-no-redo t) ;; undoにredoした履歴を含まない
-(define-key global-map (kbd "C-x C-_") 'redo) ;; redo
+(define-key global-map (kbd "C-x C-/") 'redo) ;; redo
 
 
 ;; smerge用
@@ -92,6 +93,12 @@
 
 ;; emacs lisp mode
 (define-key emacs-lisp-mode-map (kbd "C-j") 'eval-print-last-sexp)
+
+;; grep
+(define-key grep-mode-map (kbd "q") (lambda () (interactive) (quit-window t)))
+
+;; help
+(define-key help-mode-map (kbd "q") (lambda () (interactive) (quit-window t)))
 
 ;;;================= Coding System =================
 ;;; 日本語を使う (Localeに従う)
