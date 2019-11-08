@@ -140,10 +140,14 @@
                    ;; snippetの追加は M-x yas-new-snippet
                    ;; #binding: C-x C-q の様にキーバインドにモード別で設定できる
                    ;; #--以降に入力されたものが挿入される
+                   ;; snippet interface by ivy
                    (my/manage-package 'ivy-yasnippet
                                       (require 'ivy-yasnippet)
                                       (global-set-key (kbd "C-x C-x y") 'ivy-yasnippet)
                                       )
+                   ;; snippet collection
+                   (my/manage-package 'yasnippet-snippets
+                                      (require 'yasnippet-snippets))
                    )
 
 ;; 単語を色付け
