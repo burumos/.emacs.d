@@ -95,9 +95,11 @@
 (define-key emacs-lisp-mode-map (kbd "C-j") 'eval-print-last-sexp)
 
 ;; grep
+(require 'grep)
 (define-key grep-mode-map (kbd "q") (lambda () (interactive) (quit-window t)))
 
 ;; help
+(require 'help-mode)
 (define-key help-mode-map (kbd "q") (lambda () (interactive) (quit-window t)))
 
 ;;;================= Coding System =================
