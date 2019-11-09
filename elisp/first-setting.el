@@ -78,6 +78,7 @@
 (require 'redo+)
 (setq undo-no-redo t) ;; undoにredoした履歴を含まない
 (define-key global-map (kbd "C-x C-/") 'redo) ;; redo
+(define-key global-map (kbd "C-x C-_") 'redo) ;; redo
 
 
 ;; smerge用

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: file format
+# key: file format
+# --
+;; -*- lexical-binding: t; -*-
+;;; Code:
+
+
+(provide '`(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))`)
+;;; `(file-name-nondirectory (buffer-file-name))` ends here
