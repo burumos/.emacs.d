@@ -5,9 +5,9 @@
 ---
 title: "`(let ((str (car (last (split-string (buffer-file-name) "/")))))(substring str 0 (- (length str) 3)))`"
 slug: "`(let ((str (car (last (split-string (buffer-file-name) "/")))))(substring str 0 (- (length str) 3)))`"
-date: `(let ((day (calendar-current-date))) (format "%04d-%02d-%02d" (caddr day) (car day) (cadr day)))`
+date: `(shell-command-to-string "echo -n $(date +%Y-%m-%d)")`
 draft: true
-archives: "`(let ((day (calendar-current-date))) (format "%04d-%02d" (caddr day) (car day)))`"
+archives: "`(shell-command-to-string "echo -n $(date +%Y-%m)")`"
 categories: [
 ]
 tags: [
