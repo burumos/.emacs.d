@@ -85,16 +85,16 @@ With argument ARG, do this that many times."
          (lexical-let ((str (buffer-substring (line-beginning-position) (point))))
            (run-at-time "0.1 sec" nil
                         (lambda ()
-                          (let ((pnt (point)))
-                            (goto-char (line-beginning-position))
-                            (delete-char (length str))
-                            (insert str)
-                            (goto-char pnt)
-                            )
+                          (if (equal major-mode "go-mode")
+                              (let ((pnt (point)))
+                                (goto-char (line-beginning-position))
+                                (delete-char (length str))
+                                (insert str)
+                                (goto-char pnt)
+                                ))
                           )
                         )
            )))
-
 
 ;;;;;;;
 (defvar my-point-history-list '())
