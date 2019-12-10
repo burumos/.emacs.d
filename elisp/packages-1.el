@@ -85,6 +85,8 @@
                    (require 'magit)
                    (define-key magit-diff-mode-map (kbd "q")
                      (lambda () (interactive) (magit-mode-bury-buffer t)))
+                   (define-key magit-mode-map (kbd "q")
+                     (lambda () (interactive) (magit-mode-bury-buffer t)))
                    )
 
 ;; tempolaryファイルを作る
@@ -130,6 +132,7 @@
                    (add-hook 'go-mode-hook 'eglot-ensure)
                    ;; https://langserver.org/
                    ;; (add-to-list 'eglot-server-programs '(foo-mode . ("foo-language-server" "--args")))
+                   (add-to-list 'eglot-server-programs '(php-mode . ("php" "vendor/felixfbecker/language-server/bin/php-language-server.php")))
                    )
 
 ;; スニペット
@@ -171,7 +174,7 @@
                    )
 
 ;;;;;;;;;;;;;; ivy/counsel
-(my/manage-package 'counsel
+(my/manage-package nil 'counsel
                    (require 'counsel)
                    (ivy-mode 1)
                    (setq ivy-use-virtual-buffers t)
@@ -203,6 +206,13 @@
                    (my/manage-package 'counsel-tramp
                                       (require 'counsel-tramp)
                                       )
+                   )
+
+;; dockerへtramp C-x C-f /docker: でアクセス
+(my/manage-package 'docker-tramp
+                   (require 'docker-tramp)
+                   (require 'docker-tramp-compat)
+                   (set-variable 'docker-tramp-use-names t) ;; IDでなくコンテナ名で補完
                    )
 
 
@@ -284,13 +294,14 @@
 ;;helmの設定
 ;; M-y でキルリングを検索
 ;; helm-miniにemacs-commandを追加
-(my/manage-package nil 'helm
+(my/manage-package 'helm
                    (require 'helm-config)
                    (helm-mode 1)
                    (add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
 
                    (define-key helm-map (kbd "C-h") 'delete-backward-char)
                    (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+                   (define-key helm-find-files-map (kbd "C-[") 'helm-find-files-up-one-level)
                    ;;(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
                    ;;(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
 
@@ -344,15 +355,25 @@
                                       )
 
                    ;; helmを使ったファイル検索
-                   (my/manage-package nil 'helm-ls-git
+                   (my/manage-package 'helm-ls-git
                                       (require 'helm-ls-git)
-                                      (define-key global-map (kbd "C-c C-f") 'helm-ls-git-ls)
+                                      (define-key global-map (kbd "C-x C-x f") 'helm-ls-git-ls)
                                       )
 
                    ;; helmを使ったgit grep
-                   (my/manage-package nil 'helm-git-grep
+                   (my/manage-package 'helm-git-grep
                                       (require 'helm-git-grep)
-                                      (define-key global-map (kbd "C-c C-s") 'helm-ls-git-ls)
+                                      (define-key global-map (kbd "C-x C-x g") 'helm-ls-git-ls)
+                                      )
+
+                   (my/manage-package 'counsel
+                                      (require 'counsel)
+                                      ;; helmだとdesctibe-functionが激重なため
+                                      (define-key global-map (kbd "C-c f") 'counsel-describe-function))
+
+                   (my/manage-package 'swiper-helm
+                                      (require 'swiper-helm)
+                                      (define-key global-map (kbd "M-s s") 'swiper-helm)
                                       )
 
                    )

@@ -36,11 +36,9 @@
  ;; If there is more than one, they won't work right.
  '(avy-migemo-mode t)
  '(avy-migemo-use-isearch-search-fun t)
- '(css-indent-offset 2)
  '(helm-mini-default-sources
    (quote
     (helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
- '(js-indent-level 2)
  '(js2-strict-missing-semi-warning nil)
  '(jumplist-ex-mode t)
  '(jumplist-hook-commands
@@ -50,8 +48,7 @@
  '(migemo-user-dictionary nil)
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yaml-mode dockerfile-mode toml-mode counsel-tramp yafolding origami go-eldoc go-mode git-gutter-fringe+ open-junk-file json-mode lsp-php rjsx-mode use-package eglot lsp-javascript-typescript lsp-vue lsp-ui lsp-mode ivy-yasnippet yasnippet jumplist which-key flyspell-correct-ivy flycheck undo-tree smart-jump ivy-posframe ivy magit mwim highlight-symbol bind-key web-mode ace-jump-mode php-mode popwin company vue-mode ivy-rich counsel ng2-mode js2-mode typescript-mode merlin tuareg company-php company-web hiwin migemo hungry-delete markdown-mode ripgrep goto-last-change redo+ helm fuzzy ddskk auto-complete)))
- '(typescript-indent-level 2))
+    (swiper-helm docker-tramp yasnippet-snippets yaml-mode dockerfile-mode toml-mode counsel-tramp yafolding origami go-eldoc go-mode git-gutter-fringe+ open-junk-file json-mode lsp-php rjsx-mode use-package eglot lsp-javascript-typescript lsp-vue lsp-ui lsp-mode ivy-yasnippet yasnippet jumplist which-key flyspell-correct-ivy flycheck undo-tree smart-jump ivy-posframe ivy magit mwim highlight-symbol bind-key web-mode ace-jump-mode php-mode popwin company vue-mode ivy-rich counsel ng2-mode js2-mode typescript-mode merlin tuareg company-php company-web hiwin migemo hungry-delete markdown-mode ripgrep goto-last-change redo+ helm fuzzy ddskk auto-complete))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

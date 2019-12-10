@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: frontmatter
-# key: frontmatter
+# name: frontmatter hugo
+# key: frontmatter hugo
 # --
 ---
 title: "`(let ((str (car (last (split-string (buffer-file-name) "/")))))(substring str 0 (- (length str) 3)))`"
