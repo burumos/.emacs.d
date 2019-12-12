@@ -376,6 +376,9 @@
                                       (define-key global-map (kbd "M-s s") 'swiper-helm)
                                       )
 
+                   (my/manage-package 'helm-tramp
+                                      (require 'helm-tramp))
+
                    )
 
 (provide 'packages-1)

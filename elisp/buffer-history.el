@@ -5,6 +5,8 @@
 
 (require 'my-util)
 
+(defvar mybh-only-file-buffer t)
+
 (let* ((buf-lst '())
        (last-window nil)
        (last-buffer nil)
@@ -28,12 +30,15 @@
   (defun mybh-add-all-window-buffer-history()
     "操作しているframe内の全てのwindowのbuffer履歴を追加する"
     (interactive)
-    (dolist (window (window-list))
-      (let* ((buffer (window-buffer window))
-             (buffer-lst (filter-list (lambda (buf) (and (not (equal buffer buf))
-                                                         (buffer-live-p buf)))
-                               (mybh-get-list window))))
-        (mybh-set-list window (cons buffer buffer-lst) "all-window")))
+    ;; ファイルバッファ以外も含める、もしくはファイルバッファ
+    (if (or (not mybh-only-file-buffer)
+            (buffer-file-name))
+        (dolist (window (window-list))
+          (let* ((buffer (window-buffer window))
+                 (buffer-lst (filter-list (lambda (buf) (and (not (equal buffer buf))
+                                                             (buffer-live-p buf)))
+                                          (mybh-get-list window))))
+            (mybh-set-list window (cons buffer buffer-lst) "all-window"))))
     )
 
   (defun mybh-switch-prev-buffer ()
