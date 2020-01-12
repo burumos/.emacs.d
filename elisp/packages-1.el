@@ -302,6 +302,8 @@
                    (define-key helm-map (kbd "C-h") 'delete-backward-char)
                    (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
                    (define-key helm-find-files-map (kbd "C-[") 'helm-find-files-up-one-level)
+                   (define-key helm-find-files-map (kbd "ESC") nil)
+                   (define-key helm-find-files-map (kbd "C-M-h") 'helm-find-files-up-one-level)
                    ;;(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
                    ;;(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
 
