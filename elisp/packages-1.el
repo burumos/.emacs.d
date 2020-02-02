@@ -365,7 +365,7 @@
                    ;; helmを使ったgit grep
                    (my/manage-package 'helm-git-grep
                                       (require 'helm-git-grep)
-                                      (define-key global-map (kbd "C-x C-x g") 'helm-ls-git-ls)
+                                      (define-key global-map (kbd "C-x C-x g") 'helm-git-grep)
                                       )
 
                    (my/manage-package 'counsel

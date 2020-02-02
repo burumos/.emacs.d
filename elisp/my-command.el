@@ -181,6 +181,21 @@ With argument ARG, do this that many times."
 (my-point-history-rec-start)
 ;;;;;;;
 
+(defvar is-c-m-indent t)
+
+(defun c-m ()
+  "C-mの動作を定義する."
+  (interactive)
+  (if is-c-m-indent
+      (newline-and-indent)
+    (newline)))
+
+(defun toggle-c-m-indent ()
+  "is-c-m-indentをtoggleする"
+  (interactive)
+  (setq is-c-m-indent (not is-c-m-indent)))
+
+
 ;; debug関数 別バッファにメッセージを流す
 (defvar debug-message-buffer-name "debug-message-buffer")
 (defun debug-message (message &rest args)

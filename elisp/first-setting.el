@@ -67,6 +67,8 @@
 (global-set-key (kbd "M-]") 'my-point-history-go) ;; back back point
 (define-key global-map (kbd "C-x C-x k") 'kill-buffer) ;; bufferを選んで閉じる
 (define-key global-map (kbd "C-x k") 'kill-this-buffer) ;; 今開いてるbufferを閉じる
+(define-key global-map (kbd "C-x C-x TAB") (lambda () (interactive) (insert "\t"))) ;; tabを入力
+(global-set-key (kbd "C-m") 'c-m) ;; indentしたり、しなかったりしろ
 
 ;; window別buffer履歴
 (require 'buffer-history)
