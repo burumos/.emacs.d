@@ -209,9 +209,10 @@ With argument ARG, do this that many times."
         (switch-to-buffer-other-window debug-message-buffer-name)
         (goto-char (max-char))
         (select-window cur-win)))
-  (save-excursion
-    (set-buffer debug-message-buffer-name)
+  ;; デバッグバッファに挿入
+  (with-current-buffer debug-message-buffer-name
     (insert (concat (apply 'format (cons message args)) "\n")))
+  ;; カーソルを最後尾に持って行って挿入したものを表示させる
   (let ((debug-win (get-buffer-window debug-message-buffer-name)))
     (set-window-point debug-win (buffer-size (window-buffer debug-win)))))
 
