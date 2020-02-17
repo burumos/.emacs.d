@@ -181,6 +181,21 @@ With argument ARG, do this that many times."
 (my-point-history-rec-start)
 ;;;;;;;
 
+(defvar is-c-m-indent t)
+
+(defun c-m ()
+  "C-mの動作を定義する."
+  (interactive)
+  (if is-c-m-indent
+      (newline-and-indent)
+    (newline)))
+
+(defun toggle-c-m-indent ()
+  "is-c-m-indentをtoggleする"
+  (interactive)
+  (setq is-c-m-indent (not is-c-m-indent)))
+
+
 ;; debug関数 別バッファにメッセージを流す
 (defvar debug-message-buffer-name "debug-message-buffer")
 (defun debug-message (message &rest args)
@@ -194,9 +209,10 @@ With argument ARG, do this that many times."
         (switch-to-buffer-other-window debug-message-buffer-name)
         (goto-char (max-char))
         (select-window cur-win)))
-  (save-excursion
-    (set-buffer debug-message-buffer-name)
+  ;; デバッグバッファに挿入
+  (with-current-buffer debug-message-buffer-name
     (insert (concat (apply 'format (cons message args)) "\n")))
+  ;; カーソルを最後尾に持って行って挿入したものを表示させる
   (let ((debug-win (get-buffer-window debug-message-buffer-name)))
     (set-window-point debug-win (buffer-size (window-buffer debug-win)))))
 

@@ -302,6 +302,8 @@
                    (define-key helm-map (kbd "C-h") 'delete-backward-char)
                    (define-key helm-find-files-map (kbd "ESC") nil)
                    (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+                   (define-key helm-find-files-map (kbd "C-[") 'helm-find-files-up-one-level)
+                   (define-key helm-find-files-map (kbd "ESC") nil)
                    (define-key helm-find-files-map (kbd "M-C-h") 'helm-find-files-up-one-level)
                    ;;(define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
                    ;;(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action)
@@ -364,7 +366,7 @@
                    ;; helmを使ったgit grep
                    (my/manage-package 'helm-git-grep
                                       (require 'helm-git-grep)
-                                      (define-key global-map (kbd "C-x C-x g") 'helm-ls-git-ls)
+                                      (define-key global-map (kbd "C-x C-x g") 'helm-git-grep)
                                       )
 
                    (my/manage-package 'counsel

@@ -67,6 +67,8 @@
 (global-set-key (kbd "M-]") 'my-point-history-go) ;; back back point
 (define-key global-map (kbd "C-x C-x k") 'kill-buffer) ;; bufferを選んで閉じる
 (define-key global-map (kbd "C-x k") 'kill-this-buffer) ;; 今開いてるbufferを閉じる
+(define-key global-map (kbd "C-x C-x TAB") (lambda () (interactive) (insert "\t"))) ;; tabを入力
+(global-set-key (kbd "C-m") 'c-m) ;; indentしたり、しなかったりしろ
 
 ;; window別buffer履歴
 (require 'buffer-history)
@@ -346,6 +348,12 @@
 (define-key dired-mode-map "q" (lambda ()(interactive) (quit-window t)))
 (define-key dired-mode-map (kbd "M-C-n") nil)
 (define-key dired-mode-map (kbd "M-C-p") nil)
+;; ファイル名のみを表示
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;; ディレクトリの再帰的コピーを問い合わせ無く行う
+(setq dired-recursive-copies 'always)
+;; ディレクトリの削除時は最初の一回だけ尋く
+(setq dired-recursive-deletes 'top)
 
 ;;;================= upcase-region and downcase-region ================= 
 ;; Enabling upcase-region and downcase-region commands
