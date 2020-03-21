@@ -5,7 +5,8 @@
 ---
 title: "`(let ((str (car (last (split-string (buffer-file-name) "/")))))(substring str 0 (- (length str) 3)))`"
 slug: "`(let ((str (car (last (split-string (buffer-file-name) "/")))))(substring str 0 (- (length str) 3)))`"
-date: `(shell-command-to-string "echo -n $(date +%Y-%m-%d)")`
+date: `(shell-command-to-string "echo -n $(date +%Y-%m-%d)")` # 投稿日時
+# lastmode: `(shell-command-to-string "echo -n $(date +%Y-%m-%d)")` # 最終更新
 draft: true
 archives: "`(shell-command-to-string "echo -n $(date +%Y-%m)")`"
 categories: [
