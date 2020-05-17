@@ -174,7 +174,7 @@
                    )
 
 ;;;;;;;;;;;;;; ivy/counsel
-(my/manage-package nil 'counsel
+(my/manage-package 'counsel
                    (require 'counsel)
                    (ivy-mode 1)
                    (setq ivy-use-virtual-buffers t)
@@ -294,7 +294,7 @@
 ;;helmの設定
 ;; M-y でキルリングを検索
 ;; helm-miniにemacs-commandを追加
-(my/manage-package 'helm
+(my/manage-package nil 'helm
                    (require 'helm-config)
                    (helm-mode 1)
                    (add-to-list 'helm-completing-read-handlers-alist '(find-file . nil))
