@@ -349,7 +349,7 @@
 (define-key dired-mode-map (kbd "M-C-n") nil)
 (define-key dired-mode-map (kbd "M-C-p") nil)
 ;; ファイル名のみを表示
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 ;; ディレクトリの再帰的コピーを問い合わせ無く行う
 (setq dired-recursive-copies 'always)
 ;; ディレクトリの削除時は最初の一回だけ尋く

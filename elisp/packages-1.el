@@ -187,6 +187,7 @@
                    (global-set-key (kbd "C-x C-r") 'counsel-recentf)
                    (global-set-key (kbd "C-x C-b") 'counsel-switch-buffer)
                    (global-set-key (kbd "M-y") 'counsel-yank-pop)
+                   (define-key counsel-find-file-map (kbd "M-h") 'ivy-backward-kill-word)
                    ;; 検索文字列
                    (setq ivy-re-builders-alist
                          '((t . ivy--regex-ignore-order)))
@@ -213,6 +214,24 @@
                    (require 'docker-tramp)
                    (require 'docker-tramp-compat)
                    (set-variable 'docker-tramp-use-names t) ;; IDでなくコンテナ名で補完
+                   )
+;; tabバーを表示する
+(my/manage-package nil 'tabbar
+                   (require 'tabbar)
+                   (tabbar-mode)
+                   (global-set-key (kbd "<C-tab>") 'tabbar-forward-tab)
+                   (global-set-key (kbd "<C-S-tab>") 'tabbar-backward-tab)
+                   ;;----- 左側のボタンを消す
+                   (dolist (btn '(tabbar-buffer-home-button
+                                  tabbar-scroll-left-button
+                                  tabbar-scroll-right-button))
+                     (set btn (cons (cons "" nil)
+                                    (cons "" nil))))
+                   ;; (tabbar-buffer-groups)
+                   (setq tabbar-cycle-scope 'tabs)
+                   ;; 色
+                    '(tabbar-default ((t (:inherit variable-pitch :background "MediumPurple3" :foreground "grey75" :height 0.8))))
+                    '(tabbar-selected ((t (:inherit tabbar-default :foreground "light green" :box (:line-width 1 :color "white" :style pressed-button)))))
                    )
 
 
