@@ -95,7 +95,7 @@
   (defun mybh-create-switch-message (window)
     "bufferをスイッチしたときにミニッファバッファに表示するメッセージ作る"
     (let* ((buf-lst (mybh-get-list window))
-           ;; display-base-bufferを先頭にしたlist.なければ同じ.
+           ;; display-base-bufferを先頭にしたlist.なければそのまま.
            (disp-buf-lst
             (if (and (buffer-live-p display-base-buffer)
                      (find display-base-buffer buf-lst))
@@ -108,13 +108,15 @@
            (cur-buf (current-buffer)))
       ;; buffer名を改行を挟めて繋げる
       ;; 今表示しているバッファ名の文字色を赤に
-      (reduce (lambda (s1 s2) (concat s1 "\n" s2))
+      (reduce (lambda (s1 s2) (concat s1
+                                      (propertize " | " 'face '(:foreground "green"))
+                                      s2))
               (mapcar (lambda (buf)
                         (let ((buf-name (buffer-name buf)))
                           (if (equal cur-buf buf)
                               (propertize buf-name 'face '(:foreground "red"))
                             buf-name)))
-                      disp-buf-lst))))
+                      (reverse disp-buf-lst)))))
 
   (defun mybh-start-rec-timer ()
       (setq timer
