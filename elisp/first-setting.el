@@ -76,6 +76,31 @@
 (global-set-key (kbd "M-9") 'mybh-switch-prev-buffer) ;; バッファ移動(後)
 (global-set-key (kbd "C-x C-x 0") 'mybh-remove-buffer) ;; バッファリストから削除
 
+(if (symbol-function 'global-tab-line-mode)
+    (progn
+      (global-tab-line-mode 1)
+      ;; 左のタブに切り替え。最左であれば最右に切り替え
+      (define-key global-map (kbd "M-9")
+        (lambda ()
+          (interactive)
+          (let ((tabs (funcall tab-line-tabs-function)))
+            (if (eq (current-buffer)
+                    (car tabs))
+              (tab-line-select-tab-buffer (car (last tabs)))
+              (tab-line-switch-to-prev-tab)))))
+      ;; 右のタブに切り替え。最右であれば最左に切り替え
+      (define-key global-map (kbd "M-0")
+        (lambda ()
+          (interactive)
+          (let ((tabs (funcall tab-line-tabs-function)))
+            (if (eq (current-buffer)
+                    (car (last tabs)))
+                (tab-line-select-tab-buffer (car tabs))
+              (tab-line-switch-to-next-tab)))))
+      ;; 現在のバッファをタブバーから消す
+      (define-key global-map (kbd "C-x C-x 0") 'bury-buffer)
+      ))
+
 ;; redo
 (require 'redo+)
 (setq undo-no-redo t) ;; undoにredoした履歴を含まない
