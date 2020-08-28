@@ -37,25 +37,24 @@
  '(avy-migemo-mode t)
  '(avy-migemo-use-isearch-search-fun t)
  '(helm-mini-default-sources
-   (quote
-    (helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
+   '(helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands))
  '(js2-strict-missing-semi-warning nil)
  '(jumplist-ex-mode t)
  '(jumplist-hook-commands
-   (quote
-    (isearch-forward swiper isearch end-of-buffer beginning-of-buffer mark-whole-buffer)))
+   '(isearch-forward swiper isearch end-of-buffer beginning-of-buffer mark-whole-buffer))
  '(migemo-regex-dictionary nil)
  '(migemo-user-dictionary nil)
  '(open-junk-file-directory "~/junk/%Y/%m-%d-%H%M%S." t)
  '(package-selected-packages
-   (quote
-    (helm-tramp swiper-helm docker-tramp yasnippet-snippets yaml-mode dockerfile-mode toml-mode counsel-tramp yafolding origami go-eldoc go-mode git-gutter-fringe+ open-junk-file json-mode lsp-php rjsx-mode use-package eglot lsp-javascript-typescript lsp-vue lsp-ui lsp-mode ivy-yasnippet yasnippet jumplist which-key flyspell-correct-ivy flycheck undo-tree smart-jump ivy-posframe ivy magit mwim highlight-symbol bind-key web-mode ace-jump-mode php-mode popwin company vue-mode ivy-rich counsel ng2-mode js2-mode typescript-mode merlin tuareg company-php company-web hiwin migemo hungry-delete markdown-mode ripgrep goto-last-change redo+ helm fuzzy ddskk auto-complete))))
+   '(rust-mode helm-tramp swiper-helm docker-tramp yasnippet-snippets yaml-mode dockerfile-mode toml-mode counsel-tramp yafolding origami go-eldoc go-mode git-gutter-fringe+ open-junk-file json-mode lsp-php rjsx-mode use-package eglot lsp-javascript-typescript lsp-vue lsp-ui lsp-mode ivy-yasnippet yasnippet jumplist which-key flyspell-correct-ivy flycheck undo-tree smart-jump ivy-posframe ivy magit mwim highlight-symbol bind-key web-mode ace-jump-mode php-mode popwin company vue-mode ivy-rich counsel ng2-mode js2-mode typescript-mode merlin tuareg company-php company-web hiwin migemo hungry-delete markdown-mode ripgrep goto-last-change redo+ helm fuzzy ddskk auto-complete))
+ '(tab-line-close-button-show nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(tab-line-tab-current ((t (:inherit tab-line-tab :background "dark cyan"))))
  '(web-mode-comment-face ((t (:foreground "#587F35"))))
  '(web-mode-css-at-rule-face ((t (:foreground "#DFCF44"))))
  '(web-mode-css-property-name-face ((t (:foreground "#87CEEB"))))

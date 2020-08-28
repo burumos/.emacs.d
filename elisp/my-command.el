@@ -196,6 +196,25 @@ With argument ARG, do this that many times."
   (setq is-c-m-indent (not is-c-m-indent)))
 
 
+(defun my-switch-to-prev-tab ()
+  "emacs27追加の機能を使って左タブに表示を移動."
+  (interactive)
+  (let ((tabs (funcall tab-line-tabs-function)))
+    (if (eq (current-buffer)
+            (car tabs))
+        (tab-line-select-tab-buffer (car (last tabs)))
+      (tab-line-switch-to-prev-tab))))
+
+(defun my-switch-to-next-tab ()
+  "emacs27追加の機能を使って右タブに表示を移動"
+  (interactive)
+  (let ((tabs (funcall tab-line-tabs-function)))
+    (if (eq (current-buffer)
+            (car (last tabs)))
+        (tab-line-select-tab-buffer (car tabs))
+      (tab-line-switch-to-next-tab))))
+
+
 ;; debug関数 別バッファにメッセージを流す
 (defvar debug-message-buffer-name "debug-message-buffer")
 (defun debug-message (message &rest args)
