@@ -551,6 +551,9 @@
       (setq interprogram-cut-function 'paste-to-osx)
       (setq interprogram-paste-function 'copy-from-osx)
       ))
+;;mac用 optionキーをcommnadに読み替え。metaキーとして使用
+(when (eq system-type 'darwin)
+  (setq ns-command-modifier (quote meta)))
 
 
 ;; spell check(Aspell)の設定

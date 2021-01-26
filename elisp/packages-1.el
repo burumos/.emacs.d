@@ -1,18 +1,14 @@
 ;;; Code:
 
 ;;add package ripository "melpa"
-(when (require 'package nil t)
-  ;;パッケージリポジトリにMarmaladeと開発者運営のELPAの追加
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.org/packages/") t)
-  ;; (add-to-list 'package-archives
-  ;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-  ;; (add-to-list 'package-archives
-  ;;              '("marmalade" , "http://marmalade-repo.org/packages/"))
-  ;; (add-to-list 'package-archives
-  ;;              '("ELPA" , "http://tromey.com/com/elpa/"))
-  ;;インストールしたパッケージにロードパスを通して読み込む
-  (package-initialize))
+(customize-set-variable
+   'package-archives '(("org"   . "https://orgmode.org/elpa/")
+                       ("melpa" . "https://melpa.org/packages/")
+                       ("gnu"   . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless (package-installed-p 'leaf)
+  (package-refresh-contents)
+  (package-install 'leaf))
 
 (defvar-local already-refresh-package nil
   "package-refresh-contentsを行なったかどうか")
@@ -36,6 +32,18 @@
                    (progn ,@body)
                  (debug-message "Fail install package: %s" package-name)
                  ))))))
+
+(leaf leaf-keywords
+    :ensure t
+    :init
+    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+    (leaf hydra :ensure t)
+    (leaf el-get :ensure t)
+    (leaf blackout :ensure t)
+
+    :config
+    ;; initialize leaf-keywords.el
+    (leaf-keywords-init))
 
 
 ;;skk 日本語入力メソッド

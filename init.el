@@ -7,18 +7,27 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
-(setq load-path
-      (append
-       (mapcar
-        (lambda (dir) (concat user-emacs-directory dir))
-        '(
-          "elisp"
-          ))
-       load-path))
+;;; 設定ファイルを変更した後にバイトコンパイルしないと次回移行反映されない!!!
+;; emacs --batch -f batch-byte-compile init.el
 
-;;mac用 optionキーをcommnadに読み替え。metaキーとして使用
-(when (eq system-type 'darwin)
-  (setq ns-command-modifier (quote meta)))
+;; this enables this running method
+;;   emacs -q -l ~/.debug.emacs.d/{{pkg}}/init.el
+(eval-and-compile
+  (when (or load-file-name byte-compile-current-file)
+    (setq user-emacs-directory
+          (expand-file-name
+           (file-name-directory (or load-file-name byte-compile-current-file))))))
+
+(eval-and-compile
+  (customize-set-variable
+   'load-path
+   (append
+    (mapcar
+     (lambda (dir) (concat user-emacs-directory dir))
+     '(
+       "elisp"
+       ))
+    load-path)))
 
 (require 'my-util)
 (require 'my-command)
@@ -46,6 +55,8 @@
  '(migemo-regex-dictionary nil)
  '(migemo-user-dictionary nil)
  '(open-junk-file-directory "~/junk/%Y/%m-%d-%H%M%S." t)
+ '(package-selected-packages
+   '(blackout el-get hydra leaf-keywords leaf yasnippet-snippets yaml-mode which-key web-mode vue-mode use-package undo-tree toml-mode tabbar switch-buffer-functions smart-jump rust-mode rjsx-mode popwin php-mode origami open-junk-file ng2-mode mwim migemo merlin markdown-mode magit jumplist json-mode ivy-yasnippet ivy-rich hungry-delete hiwin highlight-symbol go-mode git-gutter-fringe+ flyspell-correct-ivy flycheck eglot dockerfile-mode docker-tramp ddskk counsel-tramp company avy ace-jump-mode))
  '(tab-line-close-button-show nil))
 
 (custom-set-faces

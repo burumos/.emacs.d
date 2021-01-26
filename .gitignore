@@ -11,3 +11,4 @@ elisp/local.el
 flycheck_*.el
 tramp
 tmp
+*.elc
