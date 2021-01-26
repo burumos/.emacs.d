@@ -286,7 +286,7 @@
 
 ;;; Emacsサーバー
 ;; emacsclientで接続できるようにする。
-(server-start)
+;; (server-start)
 
 ;; Executing time-stamp when file is saved.
 (if (not (memq 'time-stamp write-file-hooks))
@@ -580,6 +580,24 @@
      php-mode
      web-mode
      ))
+
+
+;;; ============= org-mode ======================
+;; tで見出しの余分な*を消す
+(setq org-hide-leading-stars nil)
+;;; org-directory内のファイルすべてからagendaを作成する
+;; (setq my-org-agenda-dir "~/org/")
+;; (setq org-agenda-files (list my-org-agenda-dir))
+;; org-mode key map
+
+;; (define-key org-mode-map (kbd "M-h") nil)
+;; (define-key org-mode-map (kbd "C-c s")
+;;   (lambda ()
+;;     (interactive)
+;;     (insert "#+BEGIN_SRC \n\n#+END_SRC")))
+
+(setq org-todo-keywords
+      '((sequence "TODO" "STOP" "DONE")))
 
 (provide 'first-setting)
 ;;; first-setting.el ends here
