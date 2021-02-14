@@ -101,7 +101,8 @@
 
 ;; tempolaryファイルを作る
 (leaf open-junk-file
-  :ensure t)
+  :ensure t
+  :custom (open-junk-file-format . "~/junk/%Y/%m-%d-%H%M%S."))
 
 ;; 日本語をローマ字で検索する(cmigemo必須:sudo apt install cmigemo)
 (leaf migemo
