@@ -195,7 +195,6 @@
 ;; dockerへtramp C-x C-f /docker: でアクセス
 (leaf docker-tramp
   :ensure t
-  :require (= (shell-command "which docker") 0)
   :when (= (shell-command "which docker") 0)
   :custom (docker-tramp-use-names . t) ;; IDでなくコンテナ名で補完
   )
