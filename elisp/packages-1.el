@@ -12,41 +12,11 @@
   (package-refresh-contents)
   (package-install 'leaf))
 
-(defvar-local already-refresh-package nil
-  "package-refresh-contentsを行なったかどうか")
-
-(defmacro my/manage-package (package &rest body)
-  "Packageの管理と設定を行なう. 有効にしない場合はpackageにnilを指定してくれ."
-  `(if ,package
-       (progn
-         (if (package-installed-p ,package)
-             (progn ,@body)
-             (let* ((package-name (symbol-name ,package))
-                    (result
-                     (ignore-errors
-                       (unless already-refresh-package
-                         (progn
-                           (package-refresh-contents)
-                           (setq already-refresh-package t)))
-                       (package-install ,package)
-                       t)))
-               (if result
-                   (progn ,@body)
-                 (debug-message "Fail install package: %s" package-name)
-                 ))))))
-
 (leaf leaf-keywords
     :ensure t
-    :init
-    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
-    (leaf hydra :ensure t)
-    (leaf el-get :ensure t)
-    (leaf blackout :ensure t)
-
     :config
     ;; initialize leaf-keywords.el
     (leaf-keywords-init))
-
 
 ;;skk 日本語入力メソッド
 ;;辞書は下記URLでSKK-JISSYO.Lをダウロードしてに.emcsa.d/に配置
@@ -63,6 +33,7 @@
 
 ;; 構文チェック
 (leaf flycheck
+  :ensure t
   :config (global-flycheck-mode)
   )
 ;; (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -122,17 +93,21 @@
 ;; いい感じに定義元にジャンプする
 (leaf smart-jump
   :ensure t
+  :bind (("M-." . smart-jump-go)
+         ("M-," . smart-jump-back)
+         ("M-?" . smart-jump-references))
   :config
-  (smart-jump-setup-default-registers))
+  ;; (smart-jump-setup-default-registers)
+  )
 
 
 ;; key bindの候補を出す
 (leaf which-key
+  :ensure t
   :config
   (which-key-mode)
   ;; (which-key-setup-side-window-right)
-  (which-key-setup-side-window-bottom)
-  )
+  (which-key-setup-side-window-bottom))
 
 (leaf eglot
   :ensure t
@@ -218,10 +193,9 @@
     )
 
 ;; dockerへtramp C-x C-f /docker: でアクセス
-(setq exist-docker-command (= (shell-command "which docker") 0))
 (leaf docker-tramp
   :ensure t
-  :require docker-tramp-compat
+  :require (= (shell-command "which docker") 0)
   :when (= (shell-command "which docker") 0)
   :custom (docker-tramp-use-names . t) ;; IDでなくコンテナ名で補完
   )
@@ -311,6 +285,6 @@
   (set-face-background 'hiwin-face "gray14") ;; 非アクティブウィンドウの背景色を設定
   )
 
-
+(add-to-load-path "elpa")
 (provide 'packages-1)
 ;;; packages-1.el ends here

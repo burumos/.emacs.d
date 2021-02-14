@@ -29,13 +29,14 @@ With argument ARG, do this that many times."
      ((or (and (<= 2 (length string-after-point))
                (equal (substring string-after-point 0 2) "  "))
           (equal string-on-point "	"))
-      (let ((count 0))
-        (loop
+      (let ((count 0)
+            (is-loop t))
+        (while is-loop
          (setq count (1+ count))
          (when (or (>= count (string-width string-after-point))
                    (not (equal string-on-point
                                (substring string-after-point count (1+ count)))))
-           (return)))
+           (setq is-loop nil)))
         (delete-char (if (> 0 arg) (- count) count))
         (cond
          ((<= arg -2) (my-delete-word (1+ arg)))
