@@ -1,7 +1,19 @@
 ;;; Code:
 
+;; migemo dictionay file
+(set-variable
+ 'migemo-dictionary
+ "/usr/local/var/homebrew/linked/cmigemo/share/migemo/utf-8/migemo-dict")
 
-
+;; init frame size
+(add-hook 'after-init-hook
+          (lambda ()
+            (if (display-graphic-p)
+                (progn
+                  (set-frame-height (selected-frame) 50)
+                  ;; (set-frame-width (selected-frame) 100)
+                  ))
+            ))
 
 (provide 'local)
 ;;; local.el ends here
