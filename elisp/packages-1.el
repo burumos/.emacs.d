@@ -23,6 +23,11 @@
 ;;http://openlab.ring.gr.jp/skk/skk/dic/
 (leaf ddskk
   :ensure t
+  :init (let ((dict-file "~/.emacs.d/SKK-JISYO.L"))
+          (if (not (file-exists-p dict-file))
+              (url-copy-file
+               "https://github.com/skk-dev/dict/raw/master/SKK-JISYO.L"
+               dict-file)))
   :custom (
            (skk-large-jisyo . "~/.emacs.d/SKK-JISYO.L")
            (skk-sticky-key . ";");; ";"で変換始め。;;で';'を入力
