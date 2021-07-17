@@ -127,5 +127,24 @@
 (leaf dockerfile-mode
   :ensure t)
 
+;; clojure
+(leaf cider
+  :ensure t)
+
+;; rust
+(leaf rust-mode
+  :ensure t
+  :hook
+  (rust-mode-hook
+   . (lambda () (setq indent-tabs-mode nil)))
+  :custom ((rust-format-on-save . t))
+  :bind (:rust-mode-map ("C-c C-c t" . rust-run))
+  )
+
+;; swift
+(leaf swift-mode
+  :ensure t)
+
+
 (provide 'packages-mode)
 ;;; packages-mode.el ends here

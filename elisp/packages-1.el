@@ -121,9 +121,13 @@
   (rjsx-mode-hook . eglot-ensure)
   (typescript-mode-hook . eglot-ensure)
   (go-mode-hook . eglot-ensure)
+  (rust-mode-hook . eglot-ensure)
+  (swift-mode-hook . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
                '(php-mode . ("php" "vendor/felixfbecker/language-server/bin/php-language-server.php")))
+  (add-to-list 'eglot-server-programs
+               '(swift-mode . ("sourcekit-lsp")))
   )
 
 ;; スニペット
@@ -146,6 +150,7 @@
 
 ;; 単語を色付け
 (leaf highlight-symbol
+  :ensure t
   :bind (("C-x C-l" . highlight-symbol)
          ("C-x l" . highlight-symbol-remove-all))
   :config
