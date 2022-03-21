@@ -125,6 +125,8 @@
   (rust-mode-hook . eglot-ensure)
   (swift-mode-hook . eglot-ensure)
   (css-mode-hook . eglot-ensure)
+  ;; gem install solargraph
+  (ruby-mode . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
                '(php-mode . ("php" "vendor/felixfbecker/language-server/bin/php-language-server.php")))
