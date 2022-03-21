@@ -117,17 +117,22 @@
 (leaf eglot
   :ensure t
   :hook
-  (js2-mode-hook . eglot-ensure)
+  ;; (js2-mode-hook . eglot-ensure)
+  (js-mode-hook . eglot-ensure)
   (rjsx-mode-hook . eglot-ensure)
   (typescript-mode-hook . eglot-ensure)
   (go-mode-hook . eglot-ensure)
   (rust-mode-hook . eglot-ensure)
   (swift-mode-hook . eglot-ensure)
+  (css-mode-hook . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
                '(php-mode . ("php" "vendor/felixfbecker/language-server/bin/php-language-server.php")))
   (add-to-list 'eglot-server-programs
                '(swift-mode . ("sourcekit-lsp")))
+  ;; npm i -g vscode-css-languageserver-bin
+  (add-to-list 'eglot-server-programs
+               '(css-mode . ("css-launguageserver" "--stdio")))
   )
 
 ;; スニペット
@@ -293,6 +298,33 @@
   (hiwin-activate)                           ;; hiwin-modeを有効化
   (set-face-background 'hiwin-face "gray14") ;; 非アクティブウィンドウの背景色を設定
   )
+
+(leaf editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
+(leaf google-translate
+  :ensure t
+  :bind (("C-c T" . google-translate-smooth-translate))
+  :custom ((google-translate-default-source-language . "en")
+           (google-translate-default-target-language . "ja")
+           (google-translate-translation-directions-alist . '(("en" . "ja"))))
+  :config
+  (leaf popup
+    :ensure t
+    )
+  ;; 一時的な対応: https://github.com/atykhonov/google-translate/issues/137
+  )
+(defun google-translate--search-tkk ()
+    "Search TKK."
+    (list 430675 2721866130))
+
+;; 言語別インデント等の設定を行なう. ~/.emacs.d/.editorconfigをユーザールートにリンクさせる必要あり
+(leaf editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
 (add-to-load-path "elpa")
 (provide 'packages-1)

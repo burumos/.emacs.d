@@ -82,21 +82,21 @@
     ))
 
 ;; jsx
-(leaf rjsx-mode
-  :ensure t
-  :mode  "\\.js\\'"
-  )
+;; (leaf rjsx-mode
+;;   :ensure nil
+;;   :mode  "\\.js\\'"
+;;   )
 
-;; javascript IDE
-(leaf js2-mode
-  :ensure t rjsx-mode
-  :mode "\\.js\\'"
-  :hook (js2-mode-hook
-         . (lambda ()
-             (set-variable 'my-js-mode-indent-num 4)
-             (set-variable 'js2-basic-offset 4)
-             (set-variable 'js-switch-indent-offset 4)
-             )))
+;; ;; javascript IDE
+;; (leaf js2-mode
+;;   :ensure nil rjsx-mode
+;;   :mode "\\.js\\'"
+;;   :hook (js2-mode-hook
+;;          . (lambda ()
+;;              (set-variable 'my-js-mode-indent-num 4)
+;;              (set-variable 'js2-basic-offset 4)
+;;              (set-variable 'js-switch-indent-offset 4)
+;;              )))
 
 ;; typescript mode
 (leaf typescript-mode
@@ -145,6 +145,13 @@
 (leaf swift-mode
   :ensure t)
 
+;; elixir
+(leaf elixir-mode
+  :ensure t)
+
+;; ruby
+(leaf enh-ruby-mode
+  :ensure t)
 
 (provide 'packages-mode)
 ;;; packages-mode.el ends here

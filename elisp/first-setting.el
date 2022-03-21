@@ -597,7 +597,8 @@
    ;; ここに書いたモードではflyspell-modeが有効化
    '(
      lisp-mode
-     js2-mode
+     js-mode
+     ;; js2-mode
      php-mode
      web-mode
      ))
