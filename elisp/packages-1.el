@@ -125,6 +125,7 @@
   (rust-mode-hook . eglot-ensure)
   (swift-mode-hook . eglot-ensure)
   (css-mode-hook . eglot-ensure)
+  (ruby-hook . eglot-ensure)
   ;; gem install solargraph
   (ruby-mode . eglot-ensure)
   :config
@@ -135,6 +136,10 @@
   ;; npm i -g vscode-css-languageserver-bin
   (add-to-list 'eglot-server-programs
                '(css-mode . ("css-launguageserver" "--stdio")))
+  ;; https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary
+  ;; インストール後、pathを通す
+  (add-to-list 'eglot-server-programs
+               '(rust-mode . ("rust-analyzer")))
   )
 
 ;; スニペット

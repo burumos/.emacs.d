@@ -64,7 +64,7 @@
 
 ;; ocaml用
 (leaf merlin
-  :ensure t
+  :ensure nil
   :config
   (let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
     (when (and opam-share (file-directory-p opam-share))
@@ -137,9 +137,15 @@
   :hook
   (rust-mode-hook
    . (lambda () (setq indent-tabs-mode nil)))
-  :custom ((rust-format-on-save . t))
+  :custom
+  ((rust-format-on-save . t))
   :bind (:rust-mode-map ("C-c C-c t" . rust-run))
+  :config
+  (leaf flycheck-rust
+    :ensure t
+    :hook (rust-mode-hook . (lambda () (flycheck-rust-setup))))
   )
+
 
 ;; swift
 (leaf swift-mode
@@ -151,7 +157,9 @@
 
 ;; ruby
 (leaf enh-ruby-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq ruby-insert-encoding-magic-comment nil))
 
 (provide 'packages-mode)
 ;;; packages-mode.el ends here
