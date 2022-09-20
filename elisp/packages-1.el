@@ -180,46 +180,41 @@
           ("C-c [" . origami-close-node)
           ("C-c ]" . origami-open-node))))
 
-;;;;;;;;;;;;;; ivy/counsel
-(leaf counsel
+;; M-xやfind-fileのUIを提供する
+(leaf vertico
   :ensure t
-  :bind (("M-s s" . swiper)
-         ("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         ("C-x C-x f" . counsel-git)
-         ("C-x C-x g" . counsel-git-grep)
-         ("C-x C-r" . counsel-recentf)
-         ("C-x C-b" . counsel-switch-buffer)
-         ("M-y" . counsel-yank-pop)
-         (:counsel-find-file-map ("M-h" . ivy-backward-kill-word)))
-  :custom ((ivy-use-virtual-buffers . t)
-           (enable-recursive-minibuffers . t)
-           ;; 検索文字列
-           (ivy-re-builders-alist .'((t . ivy--regex-ignore-order))))
   :config
-  (ivy-mode 1)
-  ;; 情報量を増やす
-  (leaf ivy-rich
+  (vertico-mode)
+  :custom
+  ((vertico-cycle . t)))
+
+;; M-xやfind-fileでの絞り込みを先頭一致から部分一致に変更する
+(leaf orderless
+  :ensure t
+  :custom
+  ((completion-styles . '(orderless basic))
+   (completion-category-defaults . nil)
+   (completion-category-overrides . '((file (styles partial-completion)))))
+  )
+
+;; コマンドを追加する
+(leaf consult
+  :ensure t
+  :bind
+  (("C-x C-r" . consult-recent-file)
+   ("M-y" . consult-yank-pop)
+   ("C-x C-x g" . consult-git-grep))
+  :config
+  (leaf consult-ls-git
     :ensure t
-    :custom (ivy-format-function . #'ivy-format-function-line)
-    :config
-    (ivy-rich-mode 1))
-    ;; ivyを使ったflyspell
-    (leaf flyspell-correct-ivy
-      :ensure t
-      :bind (:flyspell-mode-map ("C-x C-x f" . flyspell-correct-wrapper))
-      :custom (flyspell-correct-interface . #'flyspell-correct-ivy))
-    ;; tramp ivy interface
-    (leaf counsel-tramp
-      :ensure t)
-    )
+    :bind (("C-x C-x f" . consult-ls-git))))
 
 ;; dockerへtramp C-x C-f /docker: でアクセス
-(leaf docker-tramp
-  :ensure t
-  :when (= (shell-command "which docker") 0)
-  :custom (docker-tramp-use-names . t) ;; IDでなくコンテナ名で補完
-  )
+;; (leaf docker-tramp
+;;   :ensure t
+;;   :when (= (shell-command "which docker") 0)
+;;   :custom (docker-tramp-use-names . t) ;; IDでなくコンテナ名で補完
+;;   )
 
 ;;company 補完
 (leaf company

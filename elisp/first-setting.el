@@ -289,10 +289,10 @@
 ;; emacsclientで接続できるようにする。
 ;; (server-start)
 
-;; Executing time-stamp when file is saved.
-(if (not (memq 'time-stamp write-file-hooks))
-    (setq write-file-hooks
-          (cons 'time-stamp write-file-hooks)))
+;; ;; Executing time-stamp when file is saved.
+;; (if (not (memq 'time-stamp write-file-hooks))
+;;     (setq write-file-hooks
+;;           (cons 'time-stamp write-file-hooks)))
 
 (setq tramp-default-method "scp")
 
@@ -311,7 +311,7 @@
 ;;ファイルサイズを表示
 ;; (size-indication-mode t)
 
- ;; ビープ音禁止
+;; ビープ音禁止
 (setq ring-bell-function 'ignore)
 
 ;; 選択領域を削除キーで一括削除
@@ -366,7 +366,7 @@
 ;; ディレクトリの削除時は最初の一回だけ尋く
 (setq dired-recursive-deletes 'top)
 
-;;;================= upcase-region and downcase-region ================= 
+;;;================= upcase-region and downcase-region =================
 ;; Enabling upcase-region and downcase-region commands
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -374,10 +374,6 @@
 (global-unset-key "\C-x\C-l") ; default binding is 'downcase-region
 (global-unset-key "\C-x\C-u") ; default binding is 'upcase-region
 
-
-;;;================= Text-Mode =================
-(add-hook 'text-mode-hook (function (lambda () (auto-fill-mode 1))))
-(setq fill-column nil)
 
 ;; backup ファイルオープン時のバックアップ (xxx~)
 ;; -------------------------------------------
@@ -403,7 +399,7 @@
 ;; 終了時にオートセーブファイルを消す (Non-nilでON, nilでOFF)
 (setq delete-auto-save-files t)
 
- ;; backup ファイルオープン時のバックアップ (xxx~)
+;; backup ファイルオープン時のバックアップ (xxx~)
 ;; -------------------------------------------
 ;; 実行の有無
 (setq make-backup-files t)
@@ -542,15 +538,6 @@
 ;; mac クリップボート共有
 (if (eq system-type 'darwin)
     (progn
-      ;; (defun copy-from-osx ()
-      ;;   (shell-command-to-string "pbpaste"))
-      ;; (defun paste-to-osx (text &optional push)
-      ;;   (let ((process-connection-type nil))
-      ;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      ;;       (process-send-string proc text)
-      ;;       (process-send-eof proc))))
-      ;; (setq interprogram-cut-function 'paste-to-osx)
-      ;; (setq interprogram-paste-function 'copy-from-osx)
       (defun copy-from-osx ()
         "Handle copy/paste intelligently on osx."
         (let ((pbpaste (purecopy "/usr/bin/pbpaste")))
@@ -573,53 +560,6 @@
 (when (eq system-type 'darwin)
   (setq ns-command-modifier (quote meta)))
 
-
-;; spell check(Aspell)の設定
-;; 参考：http://keisanbutsuriya.hateblo.jp/entry/2015/02/10/152543
-;; aspellのインストールが必要
-;; Aspellが日本語の辞書を探してしまうらしい。常に英語の辞書を使うようにするためfile作成
-;; echo "lang en_US" >> ~/.aspell.conf
-(setq-default ispell-program-name "aspell")
-(eval-after-load "ispell"
-  '(add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
-;; (setq-default ispell-dictionary "english")
-(setq ispell-extra-args '("--sug-mode=fast" "--run-together" "--run-together-limit=5" "--run-together-min=2"))
-(mapc   ;; 以下flyspell-modeの設定
- (lambda (hook)
-   (add-hook hook 'flyspell-prog-mode))
- ;; ここに書いたモードではコメント領域のところだけflyspell-mode有効化
- '(
-   ))
-(mapc
-   (lambda (hook)
-     (add-hook hook
-               '(lambda () (flyspell-mode 1))))
-   ;; ここに書いたモードではflyspell-modeが有効化
-   '(
-     lisp-mode
-     js-mode
-     ;; js2-mode
-     php-mode
-     web-mode
-     ))
-
-
-;;; ============= org-mode ======================
-;; tで見出しの余分な*を消す
-(setq org-hide-leading-stars nil)
-;;; org-directory内のファイルすべてからagendaを作成する
-;; (setq my-org-agenda-dir "~/org/")
-;; (setq org-agenda-files (list my-org-agenda-dir))
-;; org-mode key map
-
-;; (define-key org-mode-map (kbd "M-h") nil)
-;; (define-key org-mode-map (kbd "C-c s")
-;;   (lambda ()
-;;     (interactive)
-;;     (insert "#+BEGIN_SRC \n\n#+END_SRC")))
-
-(setq org-todo-keywords
-      '((sequence "TODO" "STOP" "DONE")))
 
 (provide 'first-setting)
 ;;; first-setting.el ends here
