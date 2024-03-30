@@ -161,5 +161,9 @@
   :config
   (setq ruby-insert-encoding-magic-comment nil))
 
+;; python
+;; (leaf pyvenv
+;;   :ensure t)
+
 (provide 'packages-mode)
 ;;; packages-mode.el ends here

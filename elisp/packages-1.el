@@ -117,7 +117,7 @@
 (leaf eglot
   :ensure t
   :hook
-  ;; (js2-mode-hook . eglot-ensure)
+  ;; npm install -g typescript-language-server
   (js-mode-hook . eglot-ensure)
   (rjsx-mode-hook . eglot-ensure)
   (typescript-mode-hook . eglot-ensure)
@@ -125,9 +125,10 @@
   (rust-mode-hook . eglot-ensure)
   (swift-mode-hook . eglot-ensure)
   (css-mode-hook . eglot-ensure)
-  (ruby-hook . eglot-ensure)
   ;; gem install solargraph
-  (ruby-mode . eglot-ensure)
+  (ruby-mode-hook . eglot-ensure)
+  ;; pip install python-lsp-server
+  (python-mode-hook . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
                '(php-mode . ("php" "vendor/felixfbecker/language-server/bin/php-language-server.php")))
@@ -208,13 +209,6 @@
   (leaf consult-ls-git
     :ensure t
     :bind (("C-x C-x f" . consult-ls-git))))
-
-;; dockerへtramp C-x C-f /docker: でアクセス
-;; (leaf docker-tramp
-;;   :ensure t
-;;   :when (= (shell-command "which docker") 0)
-;;   :custom (docker-tramp-use-names . t) ;; IDでなくコンテナ名で補完
-;;   )
 
 ;;company 補完
 (leaf company

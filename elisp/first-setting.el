@@ -217,7 +217,7 @@
 
 ;;; M-x linum-mode
 ;;; バッファの左側に行番号を表示
-(global-linum-mode 1)      ; デフォルトで linum-mode を有効にする (正数でON, 0以下でOFF)
+(global-display-line-numbers-mode 1)      ; デフォルトで linum-mode を有効にする (正数でON, 0以下でOFF)
 
 ;(setq linum-format "%5d ") ; 5 桁分の領域を確保して行番号のあとにスペースを入れる
 

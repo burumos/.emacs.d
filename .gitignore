@@ -13,3 +13,6 @@ tramp
 tmp
 *.elc
 custom.el
+eln-cache
+url
+
