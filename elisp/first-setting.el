@@ -66,7 +66,7 @@
 ;; (global-set-key (kbd "M-[") 'my-point-history-back) ;; back point
 ;; (global-set-key (kbd "M-]") 'my-point-history-go) ;; back back point
 (define-key global-map (kbd "C-x C-x k") 'kill-buffer) ;; bufferを選んで閉じる
-(define-key global-map (kbd "C-x k") 'kill-this-buffer) ;; 今開いてるbufferを閉じる
+(define-key global-map (kbd "C-x k") 'kill-current-buffer) ;; 今開いてるbufferを閉じる
 (define-key global-map (kbd "C-x C-x TAB") (lambda () (interactive) (insert "\t"))) ;; tabを入力
 (global-set-key (kbd "C-m") 'c-m) ;; indentしたり、しなかったりしろ
 
@@ -214,6 +214,8 @@
 (setq-default save-place t)
 (save-place-mode 1)
 
+;;; warning bufferへの出力設定
+(setq warning-minimum-level :error)
 
 ;;; M-x linum-mode
 ;;; バッファの左側に行番号を表示
